@@ -1,5 +1,5 @@
-# ghost-cache-adapter-redis
-A redis caching adapter for Ghost
+# ghost-cache-adapter-cachable-s3
+An S3 Storage Adapter for Ghost with built in Local or Redis Caching
 
 WARNING: Still under heavy development. Wait until release is made before using
 
@@ -14,33 +14,24 @@ WARNING: Still under heavy development. Wait until release is made before using
    npm install
    npm run build
    ```
-3. Copy contents in the `dist` folder to `content/adapters/cache/ghost-cache-adapter-redis`
+3. Copy contents in the `dist` folder to `content/adapters/storage/ghost-storage-adapter-cachable-s3`
 
 # Configuration
 Within your `config.production.json` or `config.development.json` file, configure the following:
 ```json
 "adapters": {
-  "cache": {
-    "imageSizes": {
-      "adapter": "ghost-cache-adapter-redis",
-    },
-    "ghost-cache-adapter-redis": {
-      "host": "<host>"
+  "storage": {
+    "active": "ghost-storage-adapter-cachable-s3",
+    "ghost-storage-adapter-cachable-s3": {
+      "accessKeyId": "",
+      "secretAccessKey": "",
+      "sessionToken": "",
+      "bucket": "",
+      "pathPrefix": ""
     }
   }
 }
 ```
-Above describes the minimum required settings. All setting options available are as follows:
-| Setting | Optional | Default | Description |
-| ------- | -------- | ------- | ----------- |
-| username | YES | `undefined` | Set username for authentication with Redis instance. Undefined will not authenticate with a username |
-| password | YES | `undefined` | Set password for authentication with Redis instance. Undefined will cause the client to not authenticate at all with the redis server  |
-| port | YES | 6379 | Set port to connect to redis instance on |
-| ttl | YES | 3600 | Default TTL value for caching |
-| dbNumber | YES | 1 | Default Redis DB to be used within the Redis instance |
-| host | NO | N/A | Redis host endpoint to connect to |
-
-**Note:** For `username` a `password` value _must_ be provided. If there is no `password` value, `username` will be ignored. If `password` is undefined, the client will connect to the redis instance without authenticating
 
 All settings can be set also by using environment variables via Ghost's configuration environment variable syntax. See https://ghost.org/docs/config/ for details
 
@@ -52,3 +43,5 @@ All settings can be set also by using environment variables via Ghost's configur
 - https://github.com/colinmeinke/ghost-storage-adapter-s3
 - https://github.com/saulogt/custom-redis-cache-adapter
 - https://ghost.org/docs/config/
+- https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/index.html
+- https://github.com/hvetter-de/ghost-azurestorage/blob/master/index.js
